@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="assets/hero-mulher-sorrindo.jpg" imagesrcset="assets/hero-mulher-sorrindo-760.jpg 760w, assets/hero-mulher-sorrindo.jpg 1400w" imagesizes="(max-width: 900px) 100vw, 52vw">
+  <link rel="preload" as="image" href="assets/hero-sorriso.jpg" imagesrcset="assets/hero-sorriso-760.jpg 760w, assets/hero-sorriso.jpg 1371w" imagesizes="(max-width: 900px) 100vw, 52vw">
 
   <style>
     /* ═══════════════════════════════════════════════════════════
@@ -94,14 +94,16 @@
     }
     .hero__foto {
       position: absolute; top: 0; right: 0; bottom: 0; width: 52%;
-      /* A foto tem fundo quase preto: as duas máscaras somem com as bordas
-         (esquerda e base) dentro do preto do topo, sem corte seco. */
-      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%), linear-gradient(to top, transparent 0, #000 22%);
+      /* A foto já vem com preenchimento preto nas quatro bordas e o cabelo e o
+         pescoço dissolvidos nele (assets/hero-sorriso.jpg). Com "contain" ela
+         aparece inteira em qualquer tela, sem corte; as máscaras só suavizam a
+         passagem para o texto e para a seção de baixo. */
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 20%), linear-gradient(to top, transparent 0, #000 12%);
       -webkit-mask-composite: source-in;
-              mask-image: linear-gradient(to right, transparent 0, #000 30%), linear-gradient(to top, transparent 0, #000 22%);
+              mask-image: linear-gradient(to right, transparent 0, #000 20%), linear-gradient(to top, transparent 0, #000 12%);
               mask-composite: intersect;
     }
-    .hero__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+    .hero__foto img { width: 100%; height: 100%; object-fit: contain; object-position: 80% 50%; }
     .hero__wrap { position: relative; z-index: 1; padding-top: 56px; padding-bottom: 72px; }
     .hero__texto { max-width: 600px; }
     .hero__logo { width: 260px; height: auto; margin-bottom: clamp(48px, 9vh, 88px); }
@@ -118,9 +120,13 @@
 
     /* ═════════ 2. TRATAMENTOS ═════════ */
     .tratamentos { padding: 88px 0 80px; }
+    .tratamentos .wrap { max-width: 1280px; }
     .tratamentos .titulo-secao h2 { font-weight: 700; }
     .cards {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 32px;
+      display: grid; gap: 40px 28px;
+      /* O implante tem o texto mais longo: a coluna dele é mais larga para o
+         texto não virar uma tira alta ao lado dos outros três. */
+      grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.4fr);
     }
     .card { text-align: center; }
     .card__icone {
@@ -130,6 +136,7 @@
     .card__icone img, .card__icone svg { width: 34px; height: 34px; }
     .card h3 { font-size: 17px; font-weight: 700; color: var(--titulo); margin-bottom: 12px; }
     .card p { font-size: 15.5px; line-height: 1.55; color: var(--texto); max-width: 260px; margin: 0 auto; }
+    .card--largo p { max-width: 360px; }
 
     /* ═════════ 3. DIFERENCIAIS ═════════ */
     .diferenciais { background: var(--cinza-secao); padding: 80px 0 72px; }
@@ -293,11 +300,11 @@
       .hero__sub { margin-left: auto; margin-right: auto; }
       .hero__acoes { justify-content: center; flex-direction: column; gap: 18px; }
       .hero__foto {
-        position: relative; width: 100%; height: min(100vw, 460px); margin-top: 8px;
+        position: relative; width: 100%; height: min(118vw, 520px); margin-top: 8px;
         -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
                 mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
       }
-      .hero__foto img { object-position: 50% 12%; }
+      .hero__foto img { object-fit: cover; object-position: 50% 45%; }
       .cards, .dif-lista { grid-template-columns: repeat(2, 1fr); }
       .passos { grid-template-columns: repeat(2, 1fr); row-gap: 44px; }
       .passo:nth-child(3)::before { display: none; }
@@ -357,9 +364,9 @@
   <!-- ═════════ 1. TOPO ═════════ -->
   <header class="hero">
     <div class="hero__foto" aria-hidden="true">
-      <img src="assets/hero-mulher-sorrindo.jpg"
-           srcset="assets/hero-mulher-sorrindo-760.jpg 760w, assets/hero-mulher-sorrindo.jpg 1400w"
-           sizes="(max-width: 900px) 100vw, 52vw" width="1400" height="2100" alt="" fetchpriority="high">
+      <img src="assets/hero-sorriso.jpg"
+           srcset="assets/hero-sorriso-760.jpg 760w, assets/hero-sorriso.jpg 1371w"
+           sizes="(max-width: 900px) 100vw, 52vw" width="1371" height="1706" alt="" fetchpriority="high">
     </div>
     <div class="wrap hero__wrap">
       <div class="hero__texto">
@@ -398,14 +405,16 @@
             <h3>Restaurações</h3>
             <p>Restaurações precisas e estéticas que integram cor e forma ao seu sorriso.</p>
           </article>
-          <article class="card">
+          <article class="card card--largo">
             <div class="card__icone">
-              <!-- Implante: coroa, pilar e parafuso, no mesmo traço dourado dos outros ícones -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 6c-5.5 0-8.6 4.4-7.6 9.6.9 4.4 4.3 7.4 8.6 7.4h20c4.3 0 7.7-3 8.6-7.4C51.6 10.4 48.5 6 43 6c-4.2 0-6.4 2.2-11 2.2S25.2 6 21 6z"/>
-                <path d="M26 23v6h12v-6"/>
-                <path d="M25.5 29h13l-2 22-4.5 7-4.5-7z"/>
-                <path d="M24.8 34.5l14.4-1.8M25.3 40.3l13.4-1.8M25.9 46.1l12.2-1.6"/>
+              <!-- Implante: coroa, pilar, linha da gengiva e parafuso. Ocupa a mesma altura
+                   dos outros ícones e termina na mesma linha de base deles. -->
+              <svg viewBox="3 3 58 59" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21.5 4.5c-5.4 0-8.4 4.2-7.4 9.2.8 4.2 4.1 7.3 8.3 7.3h19.2c4.2 0 7.5-3.1 8.3-7.3 1-5-2-9.2-7.4-9.2-4 0-6.1 2.1-10.5 2.1s-6.5-2.1-10.5-2.1z"/>
+                <path d="M25.5 21l1.6 6h9.8l1.6-6"/>
+                <path d="M6 31.5c5.5 0 9-2.5 15-2.5h22c6 0 9.5 2.5 15 2.5"/>
+                <path d="M25 27h14l-1.6 27.5L32 61l-5.4-6.5z"/>
+                <path d="M24.8 34l14.6-2.2M25.2 40.6l13.8-2.1M25.6 47.2l12.9-2"/>
               </svg>
             </div>
             <h3>Implante dentário</h3>
